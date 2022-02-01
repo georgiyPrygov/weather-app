@@ -2,6 +2,8 @@
 
 Basic weather application which shows users's weather by current location and let him search for the weather forecast at some other locations by city/zip code.
 
+[LIVE DEMO](https://sensevr-weather.netlify.app/)
+
 ## Features
 - Forecast by current location
 - Switch between Farenheit and Celsius
