@@ -12,6 +12,9 @@ Basic weather application which shows users's weather by current location and le
 
 ## Technologies used:
 - React.js
+- Redux
+- Redux Toolkit
+- Axios
 - Typescript
 - React Hooks
 - Functional Components

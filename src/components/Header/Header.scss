@@ -1,0 +1,37 @@
+@import "../../variables.scss";
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  .actions-container {
+    display: flex;
+    align-items: center;
+    .transparent-btn {
+      background: transparent;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 40px;
+      padding: 0;
+      color: black;
+      margin-left: 32px;
+      font-family: "Inter";
+    }
+  }
+}
+@media (max-width: $bp-mobile) {
+  .header-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1;
+    border-top: 1px solid rgba(0, 0, 0, 0.6);
+    .header-content {
+        padding: 10px 0;
+    }
+  }
+}

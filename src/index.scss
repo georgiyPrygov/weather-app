@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+@import './variables.scss';
+body {
+    margin: 0;
+    font-family: $main-font;
+}
+
+div, header {
+    box-sizing: border-box;
+}
+h1,h2,h3,h4,h5 {
+    margin-top: 0;
+}
+.full-width-container {
+    width: 100%;
+    padding: 0 30px;
+    .inner-content {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+.error-message {
+    font-size: 14px;
+    color: red;
+    margin-top: 6px;
+    text-transform: capitalize;
+}
+@media (max-width: $bp-mobile) {
+    .full-width-container {
+        padding: 0 16px;
+    }
+  }

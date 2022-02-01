@@ -1,26 +1,75 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import weatherApi from "./services/weather-api";
+import { useCallback, useEffect, useState } from "react";
+import { connect } from "react-redux";
+import weatherOperations from "./redux/weather/weatherOperations";
+import Header from "./components/Header/Header";
+import LocationsList from "./components/LocationsList/LocationsList";
+import Loader from "./components/Loader/Loader";
+import weatherSelectors from "./redux/weather/weatherSelectors";
 
-function App() {
+interface weatherData {
+  setWeatherData(data: any): any;
+  setIsTrackAllowed(val: boolean): boolean;
+  currentLocation: any;
+}
+
+function App({
+  setWeatherData,
+  setIsTrackAllowed,
+  currentLocation
+}: weatherData) {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const error = useCallback(
+    (err: any) => {
+      setIsTrackAllowed(false);
+      setIsLoading(false);
+    },
+    [setIsTrackAllowed]
+  );
+
+  const locationSuccess = useCallback(() => {
+    navigator.geolocation.getCurrentPosition(function (position) {
+      weatherApi
+        .getWeatherByLocation(
+          position.coords.latitude,
+          position.coords.longitude
+        )
+        .then((res) => {
+          setWeatherData(res);
+          setIsTrackAllowed(true);
+        })
+        .then(() => setIsLoading(false));
+    }, error);
+  },[setWeatherData,setIsTrackAllowed, setIsLoading, error]);
+
+  useEffect(() => {
+    if (currentLocation === null) {
+      locationSuccess();
+    }
+  }, [currentLocation, locationSuccess]);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isLoading && currentLocation === null ? (
+        <Loader />
+      ) : (
+        <>
+          <Header />
+          <LocationsList />
+        </>
+      )}
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state: any) => ({
+  currentLocation: weatherSelectors.getWeatherData(state),
+});
+
+const mapDispatchToProps = (dispatch: any) => ({
+  setWeatherData: (data: any) =>
+    dispatch(weatherOperations.setWeatherData(data)),
+  setIsTrackAllowed: (val: boolean) =>
+    dispatch(weatherOperations.setIsTrackAllowed(val)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
