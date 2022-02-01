@@ -25,9 +25,12 @@ Basic weather application which shows users's weather by current location and le
 ## API endpoints
 - Get the data https://openweathermap.org/api
 
-## Available Scripts
+## How to run the project ?
 
-In the project directory, you can run:
+- Clone the code from this repo
+- run npm install
+- Paste your API key in .env file
+- run npm start
 
 ### `npm start`
 
